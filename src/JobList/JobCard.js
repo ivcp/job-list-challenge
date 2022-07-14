@@ -1,33 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../components/UI/Card';
+import Category from '../components/UI/CategoryBtn';
 
-const JobCard = () => {
+const JobCard = ({
+  company,
+  logo,
+  isNew,
+  isFeatured,
+  position,
+  role,
+  level,
+  languages,
+  postedAt,
+  contract,
+  location,
+  tools,
+}) => {
   return (
-    <Card border={true}>
+    <Card border={isNew || isFeatured}>
       <Container>
         <div>
           <Image>
-            <img src="/images/photosnap.svg" alt="employer-logo" />
+            <img src={logo} alt="employer-logo" />
           </Image>
           <JobDescription>
             <div>
-              <h4>Photosnap</h4>
-              <NewOrFeatured new>NEW!</NewOrFeatured>
-              <NewOrFeatured>FEATURED</NewOrFeatured>
+              <h4>{company}</h4>
+              {isNew && <NewOrFeatured new>NEW!</NewOrFeatured>}
+              {isFeatured && <NewOrFeatured>FEATURED!</NewOrFeatured>}
             </div>
-            <h1>Senior Frontend Developer</h1>
+            <h1>{position}</h1>
             <div>
-              <p>1d ago</p>
+              <p>{postedAt}</p>
               <span>.</span>
-              <p>Full Time</p>
+              <p>{contract}</p>
               <span>.</span>
-              <p>USA only</p>
+              <p>{location}</p>
             </div>
           </JobDescription>
         </div>
-        {/* TODO: buttons */}
-        <div>categories</div>
+        <div>
+          {role && <Category>{role}</Category>}
+          {level && <Category>{level}</Category>}
+          {languages.length > 0 &&
+            languages.map(lang => <Category key={lang}>{lang}</Category>)}
+          {tools.length > 0 &&
+            tools.map(tool => <Category key={tool}>{tool}</Category>)}
+        </div>
       </Container>
     </Card>
   );
@@ -36,13 +56,20 @@ const JobCard = () => {
 export default JobCard;
 
 // Styles
-/// card height 153px
 
 const Container = styled.article`
-  padding: 3.2rem;
+  padding: 3rem;
+  display: flex;
+  justify-content: space-between;
 
   & :first-child {
     display: flex;
+  }
+
+  & :last-child {
+    align-self: center;
+    display: flex;
+    gap: 1.5rem;
   }
 `;
 
@@ -95,7 +122,7 @@ const NewOrFeatured = styled.span`
   font-size: 1.5rem;
 
   width: min-content;
-  color: ${({ theme }) => theme.cardBg};
+  color: ${({ theme }) => theme.filterTable};
   padding: 0.6rem 0.7rem 0.5rem 0.7rem;
   border-radius: 2rem;
   background-color: ${props =>

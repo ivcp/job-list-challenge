@@ -8,7 +8,7 @@ const Card = ({ border, children }) => {
 // Styles
 
 const StyledCard = styled.div`
-  max-width: 112.2rem;
+  width: min(100vw, 112.2rem);
   background-color: hsl(0 0% 100%);
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
