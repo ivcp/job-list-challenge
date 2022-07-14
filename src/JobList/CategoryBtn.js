@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Category = ({ children }) => {
-  return <StyledCategory>{children}</StyledCategory>;
+const Category = ({ children, onClick }) => {
+  return (
+    <StyledCategory onClick={() => onClick(children)}>
+      {children}
+    </StyledCategory>
+  );
 };
 
 const StyledCategory = styled.button`

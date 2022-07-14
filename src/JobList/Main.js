@@ -1,30 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import JobCard from './JobCard';
 import data from '../data.json';
 
 const Main = () => {
+  const [filter, setFilter] = useState({
+    filterOn: false,
+    filterBy: null,
+    filterList: [],
+    jobs: data,
+  });
+
+  const handleFilter = entry => {
+    setFilter({
+      filterOn: true,
+      filterBy: entry,
+      filterList: [...filter.filterList, entry],
+      jobs: filter.jobs.filter(job => {
+        const list = [...job.languages, ...job.tools, job.role, job.level];
+        return list.includes(entry);
+      }),
+    });
+  };
+
+  console.log(filter);
   return (
     <StyledMain>
       {/* Job Filter */}
       <JobList>
-        {data.map(job => (
-          <JobCard
-            key={job.id}
-            company={job.company}
-            logo={job.logo}
-            isNew={job.new}
-            isFeatured={job.featured}
-            position={job.position}
-            role={job.role}
-            level={job.level}
-            languages={job.languages}
-            postedAt={job.postedAt}
-            contract={job.contract}
-            location={job.location}
-            tools={job.tools}
-          />
-        ))}
+        {!filter.filterOn &&
+          filter.jobs.map(job => (
+            <JobCard
+              key={job.id}
+              company={job.company}
+              logo={job.logo}
+              isNew={job.new}
+              isFeatured={job.featured}
+              position={job.position}
+              role={job.role}
+              level={job.level}
+              languages={job.languages}
+              postedAt={job.postedAt}
+              contract={job.contract}
+              location={job.location}
+              tools={job.tools}
+              onClick={handleFilter}
+            />
+          ))}
+
+        {filter.filterOn &&
+          filter.jobs.map(job => (
+            <JobCard
+              key={job.id}
+              company={job.company}
+              logo={job.logo}
+              isNew={job.new}
+              isFeatured={job.featured}
+              position={job.position}
+              role={job.role}
+              level={job.level}
+              languages={job.languages}
+              postedAt={job.postedAt}
+              contract={job.contract}
+              location={job.location}
+              tools={job.tools}
+              onClick={handleFilter}
+            />
+          ))}
       </JobList>
     </StyledMain>
   );

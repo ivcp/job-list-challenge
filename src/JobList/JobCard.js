@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../components/UI/Card';
-import Category from '../components/UI/CategoryBtn';
+import Category from './CategoryBtn';
 
 const JobCard = ({
   company,
@@ -16,6 +16,7 @@ const JobCard = ({
   contract,
   location,
   tools,
+  onClick,
 }) => {
   return (
     <Card border={isNew || isFeatured}>
@@ -41,12 +42,20 @@ const JobCard = ({
           </JobDescription>
         </div>
         <div>
-          {role && <Category>{role}</Category>}
-          {level && <Category>{level}</Category>}
+          {role && <Category onClick={onClick}>{role}</Category>}
+          {level && <Category onClick={onClick}>{level}</Category>}
           {languages.length > 0 &&
-            languages.map(lang => <Category key={lang}>{lang}</Category>)}
+            languages.map(lang => (
+              <Category onClick={onClick} key={lang}>
+                {lang}
+              </Category>
+            ))}
           {tools.length > 0 &&
-            tools.map(tool => <Category key={tool}>{tool}</Category>)}
+            tools.map(tool => (
+              <Category onClick={onClick} key={tool}>
+                {tool}
+              </Category>
+            ))}
         </div>
       </Container>
     </Card>
