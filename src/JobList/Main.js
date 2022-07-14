@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import JobCard from './JobCard';
 import data from '../data.json';
+import FilterCard from './FilterCard';
 
 const Main = () => {
   const [filter, setFilter] = useState({
@@ -11,11 +12,13 @@ const Main = () => {
     jobs: data,
   });
 
-  const handleFilter = entry => {
+  const addFilter = entry => {
     setFilter({
       filterOn: true,
       filterBy: entry,
-      filterList: [...filter.filterList, entry],
+      filterList: filter.filterList.includes(entry)
+        ? [...filter.filterList]
+        : [...filter.filterList, entry],
       jobs: filter.jobs.filter(job => {
         const list = [...job.languages, ...job.tools, job.role, job.level];
         return list.includes(entry);
@@ -23,11 +26,27 @@ const Main = () => {
     });
   };
 
-  console.log(filter);
+  const removeFilter = entry => {
+    const removedEntries = data.filter(job => {
+      const list = [...job.languages, ...job.tools, job.role, job.level];
+      return !list.includes(entry);
+    });
+    const newList = [...filter.filterList].filter(item => item !== entry);
+    setFilter({
+      filterBy: entry,
+      filterList: newList,
+      filterOn: newList.length > 0,
+      //TODO: filter broken
+      jobs: [...filter.jobs].concat(removedEntries),
+    });
+  };
+
   return (
     <StyledMain>
-      {/* Job Filter */}
-      <JobList>
+      {filter.filterOn && (
+        <FilterCard filter={filter.filterList} onRemoveFilter={removeFilter} />
+      )}
+      <JobList margin={!filter.filterOn}>
         {!filter.filterOn &&
           filter.jobs.map(job => (
             <JobCard
@@ -44,7 +63,7 @@ const Main = () => {
               contract={job.contract}
               location={job.location}
               tools={job.tools}
-              onClick={handleFilter}
+              onClick={addFilter}
             />
           ))}
 
@@ -64,15 +83,13 @@ const Main = () => {
               contract={job.contract}
               location={job.location}
               tools={job.tools}
-              onClick={handleFilter}
+              onClick={addFilter}
             />
           ))}
       </JobList>
     </StyledMain>
   );
 };
-
-export default Main;
 
 // Styles
 
@@ -84,8 +101,10 @@ const StyledMain = styled.main`
 `;
 
 const JobList = styled.div`
-  margin-top: 7.6rem;
+  margin-top: ${props => (props.margin ? '7.6rem ' : '1rem')};
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
 `;
+
+export default Main;
