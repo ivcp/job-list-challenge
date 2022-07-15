@@ -27,7 +27,7 @@ const JobCard = ({
           </Image>
           <JobDescription>
             <div>
-              <h4>{company}</h4>
+              <h2>{company}</h2>
               {isNew && <NewOrFeatured new>NEW!</NewOrFeatured>}
               {isFeatured && <NewOrFeatured>FEATURED!</NewOrFeatured>}
             </div>
@@ -147,7 +147,7 @@ const JobDescription = styled.div`
     }
   }
 
-  h4 {
+  h2 {
     font-size: 1.8rem;
     color: ${({ theme }) => theme.primary};
     margin-right: 1rem;
