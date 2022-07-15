@@ -3,7 +3,7 @@ import Card from '../components/UI/Card';
 import FilteredBtn from './FilteredBtn';
 import styled from 'styled-components';
 
-const FilterCard = ({ filter, onRemoveFilter }) => {
+const FilterCard = ({ filter, onRemoveFilter, onClearFilter }) => {
   return (
     <Container>
       <Card>
@@ -15,7 +15,7 @@ const FilterCard = ({ filter, onRemoveFilter }) => {
               </FilteredBtn>
             ))}
           </div>
-          <Clear>Clear</Clear>
+          <Clear onClick={onClearFilter}>Clear</Clear>
         </FilterWrapper>
       </Card>
     </Container>

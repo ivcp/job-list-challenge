@@ -31,7 +31,9 @@ const JobCard = ({
               {isNew && <NewOrFeatured new>NEW!</NewOrFeatured>}
               {isFeatured && <NewOrFeatured>FEATURED!</NewOrFeatured>}
             </div>
-            <h1>{position}</h1>
+            <a href="/">
+              <h1>{position}</h1>
+            </a>
             <div>
               <p>{postedAt}</p>
               <span>.</span>
@@ -99,9 +101,18 @@ const JobDescription = styled.div`
     align-items: center;
     gap: 1rem;
   }
+
+  a {
+    text-decoration: none;
+  }
   h1 {
     font-size: 2.2rem;
     color: ${({ theme }) => theme.dark};
+    transition: color 0.2s;
+
+    &:hover {
+      color: ${({ theme }) => theme.primary};
+    }
   }
 
   h4 {

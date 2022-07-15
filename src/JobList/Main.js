@@ -4,47 +4,59 @@ import JobCard from './JobCard';
 import data from '../data.json';
 import FilterCard from './FilterCard';
 
-const Main = () => {
-  const [filter, setFilter] = useState({
-    filterOn: false,
-    filterBy: null,
-    filterList: [],
-    jobs: data,
-  });
+const INITIAL_STATE = {
+  filterOn: false,
+  filterBy: null,
+  filterList: [],
+  jobs: data,
+};
 
-  const addFilter = entry => {
+const Main = () => {
+  const [filter, setFilter] = useState(INITIAL_STATE);
+
+  const addFilter = category => {
     setFilter({
       filterOn: true,
-      filterBy: entry,
-      filterList: filter.filterList.includes(entry)
+      filterBy: category,
+      filterList: filter.filterList.includes(category)
         ? [...filter.filterList]
-        : [...filter.filterList, entry],
+        : [...filter.filterList, category],
       jobs: filter.jobs.filter(job => {
         const list = [...job.languages, ...job.tools, job.role, job.level];
-        return list.includes(entry);
+        return list.includes(category);
       }),
     });
   };
 
-  const removeFilter = entry => {
-    const removedEntries = data.filter(job => {
-      const list = [...job.languages, ...job.tools, job.role, job.level];
-      return !list.includes(entry);
-    });
-    const newList = [...filter.filterList].filter(item => item !== entry);
-    setFilter({
-      filterBy: entry,
-      filterList: newList,
-      filterOn: newList.length > 0,
-      //TODO: filter broken
-      jobs: [...filter.jobs].concat(removedEntries),
-    });
+  const removeFilter = category => {
+    const newList = [...filter.filterList].filter(item => item !== category);
+    if (!newList.length > 0) clearFilter();
+    if (newList.length > 0) {
+      const jobs = data.filter(job => {
+        const list = [...job.languages, ...job.tools, job.role, job.level];
+        return newList.every(item => list.includes(item));
+      });
+      setFilter({
+        filterOn: true,
+        filterBy: null,
+        filterList: newList,
+        jobs: jobs,
+      });
+    }
+  };
+
+  const clearFilter = () => {
+    setFilter(INITIAL_STATE);
   };
 
   return (
     <StyledMain>
       {filter.filterOn && (
-        <FilterCard filter={filter.filterList} onRemoveFilter={removeFilter} />
+        <FilterCard
+          filter={filter.filterList}
+          onRemoveFilter={removeFilter}
+          onClearFilter={clearFilter}
+        />
       )}
       <JobList margin={!filter.filterOn}>
         {!filter.filterOn &&
