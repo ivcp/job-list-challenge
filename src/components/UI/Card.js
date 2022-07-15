@@ -14,6 +14,10 @@ const StyledCard = styled.div`
   border-radius: 0.5rem;
   border-left: 0.5rem solid
     ${props => (props.border ? ({ theme }) => theme.primary : 'none')};
+
+  @media (max-width: 50em) {
+    width: 90%;
+  }
 `;
 
 export default Card;

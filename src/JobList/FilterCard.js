@@ -26,6 +26,12 @@ const FilterCard = ({ filter, onRemoveFilter, onClearFilter }) => {
 
 const Container = styled.div`
   transform: translateY(-50%);
+
+  @media (max-width: 50em) {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const FilterWrapper = styled.div`
@@ -35,6 +41,9 @@ const FilterWrapper = styled.div`
 
   & :first-child {
     display: flex;
+    @media (max-width: 50em) {
+      flex-wrap: wrap;
+    }
   }
 `;
 
@@ -47,6 +56,10 @@ const Clear = styled.button`
   color: ${({ theme }) => theme.primary};
   cursor: pointer;
   transition: all 0.2s;
+
+  @media (max-width: 50em) {
+    color: ${({ theme }) => theme.light};
+  }
 
   &:hover {
     text-decoration: underline;

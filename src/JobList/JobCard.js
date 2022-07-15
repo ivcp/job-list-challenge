@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../components/UI/Card';
-import Category from './CategoryBtn';
+import Tablet from './Tablet';
 
 const JobCard = ({
   company,
@@ -31,7 +31,7 @@ const JobCard = ({
               {isNew && <NewOrFeatured new>NEW!</NewOrFeatured>}
               {isFeatured && <NewOrFeatured>FEATURED!</NewOrFeatured>}
             </div>
-            <a href="/">
+            <a href="/" onClick={e => e.preventDefault()}>
               <h1>{position}</h1>
             </a>
             <div>
@@ -44,19 +44,19 @@ const JobCard = ({
           </JobDescription>
         </div>
         <div>
-          {role && <Category onClick={onClick}>{role}</Category>}
-          {level && <Category onClick={onClick}>{level}</Category>}
+          {role && <Tablet onClick={onClick}>{role}</Tablet>}
+          {level && <Tablet onClick={onClick}>{level}</Tablet>}
           {languages.length > 0 &&
             languages.map(lang => (
-              <Category onClick={onClick} key={lang}>
+              <Tablet onClick={onClick} key={lang}>
                 {lang}
-              </Category>
+              </Tablet>
             ))}
           {tools.length > 0 &&
             tools.map(tool => (
-              <Category onClick={onClick} key={tool}>
+              <Tablet onClick={onClick} key={tool}>
                 {tool}
-              </Category>
+              </Tablet>
             ))}
         </div>
       </Container>
@@ -73,14 +73,29 @@ const Container = styled.article`
   display: flex;
   justify-content: space-between;
 
+  @media (max-width: 50em) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+
   & :first-child {
     display: flex;
+
+    @media (max-width: 50em) {
+      flex-direction: column;
+    }
   }
 
   & :last-child {
     align-self: center;
     display: flex;
     gap: 1.5rem;
+
+    @media (max-width: 50em) {
+      flex-wrap: wrap;
+      align-self: flex-start;
+    }
   }
 `;
 
@@ -88,6 +103,15 @@ const Image = styled.div`
   img {
     display: block;
     margin-right: 2rem;
+
+    @media (max-width: 50em) {
+      width: 6rem;
+    }
+  }
+
+  @media (max-width: 50em) {
+    align-self: flex-start;
+    transform: translateY(-100%);
   }
 `;
 
@@ -96,10 +120,18 @@ const JobDescription = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
+  @media (max-width: 50em) {
+    margin-top: -4rem;
+  }
+
   & :first-child {
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    @media (max-width: 50em) {
+      flex-direction: row;
+    }
   }
 
   a {
@@ -125,6 +157,10 @@ const JobDescription = styled.div`
     display: flex;
     gap: 1.5rem;
 
+    @media (max-width: 50em) {
+      align-self: flex-start;
+    }
+
     p {
       font-size: 1.8rem;
       color: ${({ theme }) => theme.light};
@@ -134,6 +170,15 @@ const JobDescription = styled.div`
       font-size: 2.5rem;
       line-height: 0.3;
       color: ${({ theme }) => theme.light};
+    }
+  }
+
+  @media (max-width: 50em) {
+    &::after {
+      content: '';
+      width: 36rem;
+      border-bottom: 2px solid #ccc;
+      margin-bottom: 2rem;
     }
   }
 `;

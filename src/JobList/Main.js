@@ -117,6 +117,11 @@ const JobList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+
+  @media (max-width: 50em) {
+    gap: 5rem;
+    align-items: center;
+  }
 `;
 
 export default Main;

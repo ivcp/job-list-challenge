@@ -16,6 +16,11 @@ const Btn = styled.div`
   display: flex;
   align-items: center;
   margin-right: 1.5rem;
+
+  @media (max-width: 50em) {
+    margin-bottom: 1rem;
+  }
+
   label {
     font-size: 1.6rem;
     font-weight: 700;

@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Category = ({ children, onClick }) => {
+const Tablet = ({ children, onClick }) => {
   return (
     <StyledCategory onClick={() => onClick(children)}>
       {children}
     </StyledCategory>
   );
 };
+
+//Styles
 
 const StyledCategory = styled.button`
   border: none;
@@ -27,4 +29,4 @@ const StyledCategory = styled.button`
   }
 `;
 
-export default Category;
+export default Tablet;

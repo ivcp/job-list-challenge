@@ -15,4 +15,9 @@ const HeaderImage = styled.header`
   background-size: 100%;
   height: 15.6rem;
   width: 100%;
+
+  @media (max-width: 50em) {
+    background: url('./images/bg-header-mobile.svg') center no-repeat;
+    background-color: ${({ theme }) => theme.primary};
+  }
 `;
